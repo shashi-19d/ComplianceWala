@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net10.0": {}
+    "net10.0": {
+      "ComplianceWala.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/ComplianceWala.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ComplianceWala.Domain.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "ComplianceWala.Domain/1.0.0": {
+      "type": "project",
+      "path": "../ComplianceWala.Domain/ComplianceWala.Domain.csproj",
+      "msbuildProject": "../ComplianceWala.Domain/ComplianceWala.Domain.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net10.0": []
+    "net10.0": [
+      "ComplianceWala.Domain >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\shash\\.nuget\\packages\\": {},
@@ -38,7 +57,11 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\shash\\source\\repos\\ComplianceWala\\src\\ComplianceWala.Domain\\ComplianceWala.Domain.csproj": {
+              "projectPath": "C:\\Users\\shash\\source\\repos\\ComplianceWala\\src\\ComplianceWala.Domain\\ComplianceWala.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
