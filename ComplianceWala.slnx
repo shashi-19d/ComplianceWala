@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ComplianceWala.API/ComplianceWala.API.csproj" />
+    <Project Path="src/ComplianceWala.Application/ComplianceWala.Application.csproj" />
+    <Project Path="src/ComplianceWala.Domain/ComplianceWala.Domain.csproj" />
+    <Project Path="src/ComplianceWala.Infrastructure/ComplianceWala.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ComplianceWala.Tests/ComplianceWala.Tests.csproj" />
+  </Folder>
+</Solution>
