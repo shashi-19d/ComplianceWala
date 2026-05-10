@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ZrWgXxEjIME=",
+  "dgSpecHash": "fjh+bi1eDME=",
   "success": true,
   "projectFilePath": "C:\\Users\\shash\\source\\repos\\ComplianceWala\\src\\ComplianceWala.Application\\ComplianceWala.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\shash\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.7\\microsoft.extensions.dependencyinjection.abstractions.10.0.7.nupkg.sha512",
+    "C:\\Users\\shash\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.7\\microsoft.extensions.logging.abstractions.10.0.7.nupkg.sha512"
+  ],
   "logs": []
 }

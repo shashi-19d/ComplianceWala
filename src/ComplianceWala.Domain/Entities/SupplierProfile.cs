@@ -15,8 +15,8 @@ public class SupplierProfile
 {
     // ── Identity ──────────────────────────────────────────────────
     public Guid Id { get; private set; }
-    public string Gstin { get; private set; }
-    public string Name { get; private set; }
+    public string Gstin { get; private set; } = null;
+    public string Name { get; private set; } = null;
 
     // ── Filing History ────────────────────────────────────────────
     

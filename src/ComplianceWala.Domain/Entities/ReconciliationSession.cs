@@ -24,13 +24,13 @@ public class ReconciliationSession
     public Guid Id { get; private set; }
 
     /// <summary>GSTIN of the business running this reconciliation.</summary>
-    public string BusinessGstin { get; private set; }
+    public string BusinessGstin { get; private set; } = null;
 
     /// <summary>
     /// The GST filing period being reconciled.
     /// Format: "2024-03" = March 2024 GSTR-1 vs GSTR-2B reconciliation.
     /// </summary>
-    public string FilingPeriod { get; private set; }
+    public string FilingPeriod { get; private set; } = null;
 
     // ── Invoice Collections ───────────────────────────────────────
     
