@@ -40,7 +40,7 @@ public class MismatchRecord
     /// <summary>ITC amount at stake in this specific mismatch.</summary>
     public decimal ItcAmountAtRisk { get; private set; }
 
-    public ItcRiskScore RiskScore { get; private set; }
+    public ItcRiskScore RiskScore { get; private set; } = null;
 
     // ── AI-Generated Explanation ──────────────────────────────────
     

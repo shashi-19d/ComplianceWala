@@ -20,7 +20,7 @@ public class Invoice
     /// This is the PRIMARY MATCHING KEY during reconciliation.
     /// Same invoice number in buyer's books AND GSTR-2B = potential match.
     /// </summary>
-    public string InvoiceNumber { get; private set; }
+    public string InvoiceNumber { get; private set; } = null;
 
     public DateOnly InvoiceDate { get; private set; }
 
@@ -29,12 +29,12 @@ public class Invoice
     /// Format: 2-digit state code + 10-digit PAN + 1 entity + 1 check + Z
     /// Example: 27AABCU9603R1ZX
     /// </summary>
-    public string SupplierGstin { get; private set; }
+    public string SupplierGstin { get; private set; } = null;
 
-    public string SupplierName { get; private set; }
+    public string SupplierName { get; private set; } = null;
 
     /// <summary>GSTIN of the buyer (your user's business).</summary>
-    public string BuyerGstin { get; private set; }
+    public string BuyerGstin { get; private set; } = null;
 
     // ── Financial Fields ──────────────────────────────────────────
     
