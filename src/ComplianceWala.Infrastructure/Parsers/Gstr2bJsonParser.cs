@@ -22,7 +22,7 @@ public sealed class Gstr2bJsonParser : IGstr2bParser
         _logger = logger;
     }
 
-    public async Task<Gstr2bParseResult> ParseAsync(string jsonContent)
+    public Task<Gstr2bParseResult> ParseAsync(string jsonContent)
     {
         if (string.IsNullOrWhiteSpace(jsonContent))
             throw new DomainException("EMPTY_GSTR2B_JSON",
@@ -99,16 +99,14 @@ public sealed class Gstr2bJsonParser : IGstr2bParser
             "GSTR-2B parsed: {Count} invoices, {Suppliers} suppliers, {Skipped} skipped",
             invoices.Count, supplierFilingDates.Count, skippedCount);
 
-        await Task.CompletedTask;
-
-        return new Gstr2bParseResult(
+        return Task.FromResult(new Gstr2bParseResult(
             BuyerGstin: data.BuyerGstin.Trim().ToUpperInvariant(),
             FilingPeriod: filingPeriod,
             Invoices: invoices.AsReadOnly(),
             SupplierFilingDates: supplierFilingDates,
             TotalInvoiceCount: invoices.Count,
             TotalItcAvailable: invoices.Sum(i => i.TotalItc)
-        );
+        ));
     }
 
     private static Invoice MapToInvoice(
