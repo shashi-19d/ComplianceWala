@@ -35,7 +35,7 @@ public sealed class Gstr1JsonParser : IGstr1Parser
         _logger = logger;
     }
 
-    public async Task<Gstr1ParseResult> ParseAsync(string jsonContent)
+    public Task<Gstr1ParseResult> ParseAsync(string jsonContent)
     {
         // ── Step 1: Guard against null/empty input ────────────────
         if (string.IsNullOrWhiteSpace(jsonContent))
@@ -111,24 +111,18 @@ public sealed class Gstr1JsonParser : IGstr1Parser
             }
         }
 
-        _logger.LogInformation(
+       _logger.LogInformation(
             "GSTR-1 parsed: {SuccessCount} invoices loaded, {SkippedCount} skipped",
             invoices.Count, skippedCount);
 
-        // ── Step 6: Build and return result ──────────────────────
-        return new Gstr1ParseResult(
+        return Task.FromResult(new Gstr1ParseResult(
             SupplierGstin: root.SupplierGstin.Trim().ToUpperInvariant(),
             FilingPeriod: filingPeriod,
             Invoices: invoices.AsReadOnly(),
             TotalInvoiceCount: invoices.Count,
             TotalTaxableValue: invoices.Sum(i => i.TaxableValue),
             TotalItc: invoices.Sum(i => i.TotalItc)
-        );
-
-        // Wrapped in local function — only this method needs it
-        // 'await' makes ParseAsync truly async; for now parsing is sync
-        // but the signature is async for future API-based GST fetching
-        await Task.CompletedTask;
+        ));
     }
 
     // ── Private Helpers ───────────────────────────────────────────
