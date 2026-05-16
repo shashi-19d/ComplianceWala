@@ -17,8 +17,7 @@ public static class ReconciliationEndpoints
     public static void MapReconciliationEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/api/reconciliation")
-            .WithTags("Reconciliation")
-            .WithOpenApi();
+    .WithTags("Reconciliation");
 
         // POST /api/reconciliation/sessions
         group.MapPost("/sessions", async (

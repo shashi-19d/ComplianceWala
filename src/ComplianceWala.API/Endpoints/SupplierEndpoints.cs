@@ -7,8 +7,7 @@ public static class SupplierEndpoints
     public static void MapSupplierEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/api/suppliers")
-            .WithTags("Suppliers")
-            .WithOpenApi();
+    .WithTags("Suppliers");
 
         // GET /api/suppliers/{gstin}/risk
         group.MapGet("/{gstin}/risk", async (
