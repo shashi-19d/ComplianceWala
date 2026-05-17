@@ -6,6 +6,8 @@ using ComplianceWala.Infrastructure.Parsers;
 using ComplianceWala.Infrastructure.Persistence;
 using ComplianceWala.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using ComplianceWala.Infrastructure.BackgroundJobs;
+using Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +50,34 @@ builder.Services.AddSwaggerGen(c =>
         Description = "AI-Powered GST Reconciliation Engine for Indian SMBs"
     });
 });
+
+
+// ── Application Services ──────────────────────────────────────────
+builder.Services.AddScoped<IReconciliationOrchestrator, ReconciliationOrchestrator>();
+builder.Services.AddScoped<ISupplierRiskService, SupplierRiskService>();
+builder.Services.AddScoped<IReconciliationEngine, ReconciliationEngine>();
+builder.Services.AddScoped<IDeadlineAlertService, DeadlineAlertService>(); // ← ADD THIS
+
+// ── Background Jobs ───────────────────────────────────────────────
+builder.Services.AddQuartz(q =>
+{
+    var jobKey = new JobKey("DeadlineAlertJob");
+
+    q.AddJob<DeadlineAlertJob>(opts => opts
+        .WithIdentity(jobKey)
+        .WithDescription("Scans reconciliation sessions for approaching GST deadlines"));
+
+    q.AddTrigger(opts => opts
+        .ForJob(jobKey)
+        .WithIdentity("DeadlineAlertJob-trigger")
+        .WithDescription("Runs daily at 8:00 AM UTC")
+        // Cron: seconds minutes hours day month weekday
+        // "0 0 8 * * ?" = at 8:00:00 AM every day
+        .WithCronSchedule("0 0 8 * * ?"));
+});
+
+builder.Services.AddQuartzHostedService(q =>
+    q.WaitForJobsToComplete = true);  // Graceful shutdown waits for running jobs
 
 var app = builder.Build();
 

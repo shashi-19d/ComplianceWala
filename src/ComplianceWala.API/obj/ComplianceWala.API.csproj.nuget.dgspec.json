@@ -67,6 +67,10 @@
               "target": "Package",
               "version": "[10.0.0, )"
             },
+            "Quartz.AspNetCore": {
+              "target": "Package",
+              "version": "[3.18.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[10.1.7, )"
@@ -1265,6 +1269,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[10.0.0, )"
+            },
+            "Quartz": {
+              "target": "Package",
+              "version": "[3.18.1, )"
             }
           },
           "imports": [

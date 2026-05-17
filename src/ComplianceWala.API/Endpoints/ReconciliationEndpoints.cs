@@ -70,5 +70,20 @@ public static class ReconciliationEndpoints
         })
         .WithName("GetSessionResult")
         .WithSummary("Get reconciliation results for a completed session");
+
+
+        // POST /api/reconciliation/alerts/scan
+        // Manual trigger for testing — same job the scheduler runs
+        group.MapPost("/alerts/scan", async (
+            IDeadlineAlertService alertService,
+            CancellationToken ct) =>
+        {
+            var summary = await alertService.ScanAndAlertAsync(ct);
+            return Results.Ok(summary);
+        })
+        .WithName("TriggerDeadlineScan")
+        .WithSummary("Manually trigger deadline alert scan (dev/test use)");
     }
+
+
 }
