@@ -8,6 +8,7 @@ using ComplianceWala.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using ComplianceWala.Infrastructure.BackgroundJobs;
 using Quartz;
+using ComplianceWala.Infrastructure.AI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,14 @@ builder.Services.AddScoped<IReconciliationOrchestrator, ReconciliationOrchestrat
 builder.Services.AddScoped<ISupplierRiskService, SupplierRiskService>();
 builder.Services.AddScoped<IReconciliationEngine, ReconciliationEngine>();
 builder.Services.AddScoped<IDeadlineAlertService, DeadlineAlertService>(); // ← ADD THIS
+
+builder.Services.AddHttpClient<OllamaClient>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:11434");
+    // Generous timeout — phi3:mini on CPU can take 30-60 seconds
+    client.Timeout = TimeSpan.FromSeconds(120);
+});
+builder.Services.AddScoped<IAiNarrativeService, AiNarrativeService>();
 
 // ── Background Jobs ───────────────────────────────────────────────
 builder.Services.AddQuartz(q =>

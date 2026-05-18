@@ -83,7 +83,37 @@ public static class ReconciliationEndpoints
         })
         .WithName("TriggerDeadlineScan")
         .WithSummary("Manually trigger deadline alert scan (dev/test use)");
+
+
+        // POST /api/reconciliation/sessions/{id}/narratives
+        group.MapPost("/sessions/{id:guid}/narratives", async (
+            Guid id,
+            IAiNarrativeService aiService,
+            IReconciliationOrchestrator orchestrator,
+            CancellationToken ct) =>
+        {
+            var sessionResult = await orchestrator.GetSessionResultAsync(id, ct);
+            if (sessionResult is null)
+                return Results.NotFound(new { message = $"Session {id} not found" });
+
+            // Build context for each mismatch
+            var contexts = sessionResult.Mismatches.Select(m =>
+                new MismatchNarrativeContext(
+                    MismatchId: m.MismatchId,
+                    MismatchTypeName: m.MismatchType.ToString(),
+                    SupplierName: m.SupplierName,
+                    SupplierGstin: m.SupplierGstin,
+                    InvoiceNumber: m.InvoiceNumber,
+                    ItcAmountAtRisk: m.ItcAmountAtRisk,
+                    DaysToDeadline: m.DaysToDeadline,
+                    RecommendedActionName: m.RecommendedAction.ToString(),
+                    RuleGeneratedSummary: m.ActionSummary
+                )).ToList().AsReadOnly();
+
+            var narratives = await aiService.GenerateBatchNarrativesAsync(contexts, ct);
+            return Results.Ok(narratives);
+        })
+        .WithName("GenerateAiNarratives")
+        .WithSummary("Generate AI explanations for all mismatches in a session");
     }
-
-
 }
